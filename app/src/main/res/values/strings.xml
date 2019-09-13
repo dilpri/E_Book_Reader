@@ -24,4 +24,31 @@
     <string name="name_of_menu">Name of Menu</string>
     <string name="name_of_book">Name of Book</string>
 
+    <string name="app_name1">Introduction</string>
+    <string name="t1">Romeo and Juliet</string>
+    <string name="t2">William Shakespeare</string>
+    <string name="t3">1,3600 Downloaded</string>
+    <string name="t4">Introduction</string>
+    <string name="t5">Romeo and Juliet is a play written by the English playwright William Shakespeare. It was published for the first time in 1597. Romeo and Juliet is probably the most famous love story of all time. It is a tragic tale depicting the forbidden love shared by two young lovers coming from two feuding families.
+    </string>
+    <string name="t6">Liked</string>
+    <string name="t7">SIZE</string>
+    <string name="t8">2.11MB</string>
+    <string name="t9">LANGUAGE</string>
+    <string name="t10">English</string>
+    <string name="t11">Tags</string>
+    <string name="t12">Romance</string>
+    <string name="b1">READ</string>
+
+
+    <string name="app_name2">Chapter</string>
+    <string name="t13">Romeo and Juliet</string>
+    <string name="t14">By</string>
+    <string name="t15">William Shakespeare</string>
+    <string name="t16">Chapter_1</string>
+    <string name="t17"> Sampson and Gregory, two servants of the house of Capulet, stroll through the streets of Verona. With bawdy banter, Sampson vents his hatred of the house of Montague. The two exchange punning remarks about physically conquering Montague men and sexually conquering Montague women. Gregory sees two Montague servants approaching, and discusses with Sampson the best way to provoke them into a fight without breaking the law. Sampson bites his thumb at the Montaguesâ€”a highly insulting gesture. A verbal confrontation quickly escalates into a fight. Benvolio, a kinsman to Montague, enters and draws his sword in an attempt to stop the confrontation. Tybalt, a kinsman to Capulet, sees Benvolioâ€™s drawn sword and draws his own. Benvolio explains that he is merely trying to keep the peace, but Tybalt professes a hatred for peace as strong as his hatred for Montagues, and attacks. The brawl spreads. A group of citizens bearing clubs attempts to restore the peace by beating down the combatants. Montague and Capulet enter, and only their wives prevent them from attacking one another. Prince Escalus arrives and commands the fighting stop on penalty of torture. The Capulets and Montagues throw down their weapons. The Prince declares the violence between the two families has gone on for too long, and proclaims a death sentence upon anyone who disturbs the civil peace again. He says that he will speak to Capulet and Montague more directly on this matter; Capulet exits with him, the brawlers disperse, and Benvolio is left alone with his uncle and aunt, Montague and Lady Montague.
+Benvolio describes to Montague how the brawl started. Lady Montague asks whether Benvolio has seen her son, Romeo. Benvolio replies that he earlier saw Romeo pacing through a grove of sycamores outside the city; since Romeo seemed troubled, Benvolio did not speak to him. Concerned about their son, the Montagues tell Benvolio that Romeo has often been seen melancholy, walking alone among the sycamores. They add that they have tried to discover what troubles him, but have had no success. Benvolio sees Romeo approaching, and promises to find out the reason for his melancholy. The Montagues quickly depart.Benvolio approaches his cousin. With a touch of sadness, Romeo tells Benvolio that he is in love with Rosaline, but that she does not return his feelings and has in fact sworn to live a life of chastity. Benvolio counsels Romeo to forget her by gazing on other beauties, but Romeo contends that the woman he loves is the most beautiful of all. Romeo departs, assuring Benvolio that he cannot teach him to forget his love. Benvolio resolves to do just that.  </string>
+    <string name="b2"> MORE </string>
+    <string name="t18"> Comments  </string>
+
 </resources>
