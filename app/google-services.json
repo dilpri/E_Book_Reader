@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "984198543681",
+    "firebase_url": "https://ebookreadernew.firebaseio.com",
+    "project_id": "ebookreadernew",
+    "storage_bucket": "ebookreadernew.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984198543681:android:68f5b36f746ce352",
+        "android_client_info": {
+          "package_name": "com.example.ebookreader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "984198543681-tfs1ar9el167c1vhu5sl8kajnvr221hg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ebookreader",
+            "certificate_hash": "df3539918cad853074c11d0533914cfa7ff36c20"
+          }
+        },
+        {
+          "client_id": "984198543681-lkduvrjs49kegvrm3d02ehcch5llaud5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMpjRPP-dWK3O3XICQnVIWph4ZUK9BqJ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "984198543681-lkduvrjs49kegvrm3d02ehcch5llaud5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

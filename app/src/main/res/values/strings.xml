@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">EBookReader</string>
+    <string name="slogan">~ The book is not an ESCAPE  from life but a SHORTCUT to a better one ~</string>
+    <string name="login_with_google">Login with google</string>
+    <string name="phone_number">Phone Number</string>
+
+    <string name="password">Password</string>
+    <string name="name">Name</string>
+
+    <string name="title_activity_home">Home</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="john">John</string>
+    <string name="menu">Menu</string>
+    <string name="settings">Settings</string>
+    <string name="favourites">Favourites</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="name_of_menu">Name of Menu</string>
+    <string name="name_of_book">Name of Book</string>
+
+</resources>
