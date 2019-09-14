@@ -11,10 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Main4Activity"></activity>
+        <activity android:name=".chapter"/>
+        <activity android:name=".Intraduction" />
+        <activity android:name=".BookList" />
         <activity android:name=".Main3Activity" />
         <activity android:name=".DeliveryDetailsActivity" />
-        <activity android:name=".BookList" />
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"
