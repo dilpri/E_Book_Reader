@@ -24,6 +24,28 @@
     <string name="name_of_menu">Name of Menu</string>
     <string name="name_of_book">Name of Book</string>
 
+    <string name="Topic">+ Add New Address</string>
+    <string name="Topic2">Update Address</string>
+    <string name="Topic3">Default Address</string>
+    <string name="Topic4">Other Address</string>
+    <string name="txtUpdate">Update</string>
+    <string name="txtDelete">Delete</string>
+    <string name="add1Hint">Address 1</string>
+    <string name="add2Hint">Address 2</string>
+    <string name="provinceHint">Province</string>
+    <string name="codeHint">Postal Code</string>
+    <string name="Number">Mobile Number</string>
+    <string name="NumberHint">Enter Mobile Number</string>
+    <string name="Switch">Set As Default Address</string>
+    <string name="btn1">Add Address</string>
+    <string name="btn2">Update Address</string>
+    <string name="btn3">ORDER NOW</string>
+
+    <string name="txt1">Rate This Book</string>
+    <string name="txt2">Tell others what do you think about this book</string>
+    <string name="bttn1">ASK ME LATER</string>
+    <string name="bttn2">OK</string>
+
     <string name="app_name1">Introduction</string>
     <string name="t1">Romeo and Juliet</string>
     <string name="t2">William Shakespeare</string>
