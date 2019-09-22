@@ -1,9 +1,10 @@
-package com.example.chapter;
+package com.example.ebookreader;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Chapter extends AppCompatActivity {
     TextView tx13,tx14,tx15,tx16,tx17,tx18;

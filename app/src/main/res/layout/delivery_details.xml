@@ -29,7 +29,7 @@
             android:layout_marginEnd="8dp"
             android:text="@string/Topic"
             android:textAlignment="center"
-            android:textSize="30dp"
+            android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +51,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/book_name"
             android:layout_width="386dp"
             android:layout_height="58dp"
             android:layout_marginStart="8dp"
@@ -66,7 +66,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editText3" />
 
         <EditText
-            android:id="@+id/editText5"
+            android:id="@+id/book_isbn"
             android:layout_width="383dp"
             android:layout_height="42dp"
             android:layout_marginStart="8dp"
@@ -81,7 +81,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editText4" />
 
         <EditText
-            android:id="@+id/editText6"
+            android:id="@+id/book_author"
             android:layout_width="382dp"
             android:layout_height="44dp"
             android:layout_marginStart="8dp"
@@ -96,7 +96,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editText5" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/book_description"
             android:layout_width="397dp"
             android:layout_height="53dp"
             android:layout_marginStart="8dp"
@@ -127,7 +127,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/upload"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

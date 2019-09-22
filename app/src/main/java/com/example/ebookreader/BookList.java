@@ -1,34 +1,24 @@
 package com.example.ebookreader;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.graphics.ColorSpace;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.example.ebookreader.Interface.ItemClickListener;
 import com.example.ebookreader.Model.Book;
-import com.example.ebookreader.Model.Category;
 import com.example.ebookreader.ViewHolder.BookViewHolder;
-import com.example.ebookreader.ViewHolder.MenuViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.squareup.picasso.Picasso;
 
@@ -42,16 +32,15 @@ public class BookList extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference bookList;
-
-    String categoryId="";
-    FirebaseRecyclerAdapter<Book, BookViewHolder> firebaseUsersAdapter = null;
-    private Query query;
-     FirebaseRecyclerAdapter<Book, BookViewHolder> adapter;
+    List<Book> books = new ArrayList<>();
+    String categoryId = "";
 
     //Search Function
-     FirebaseRecyclerAdapter<Book, BookViewHolder> searchAdapter;
-     List<String> suggestList = new ArrayList<>();
-     MaterialSearchBar materialSearchBar;
+    FirebaseRecyclerAdapter<Book, BookViewHolder> searchAdapter;
+    List<String> suggestList = new ArrayList<>();
+    MaterialSearchBar materialSearchBar;
+    private DatabaseReference databaseReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,56 +51,35 @@ public class BookList extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         bookList = database.getReference("Book");
 
-        recyclerView = (RecyclerView)findViewById(R.id.recycler_book);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_book);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+
         //get intent here
+        Intent intent = getIntent();
         if (getIntent() != null)
-            categoryId=getIntent().getStringExtra("CategoryId");
-        if (!categoryId.isEmpty() && categoryId != null){
-            loadListBook(categoryId);
-        }
+            categoryId = intent.getStringExtra("CategoryID");
 
         //search
-        materialSearchBar = (MaterialSearchBar)findViewById(R.id.searchBar);
+        materialSearchBar = (MaterialSearchBar) findViewById(R.id.searchBar);
         materialSearchBar.setHint("Enter your book");
         //materialSearchBar.setSpeechMode(false);
-        loadSuggest();
+        //loadSuggest();
         materialSearchBar.setLastSuggestions(suggestList);
         materialSearchBar.setCardViewElevation(10);
-        materialSearchBar.addTextChangeListener(new TextWatcher( ) {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                List<String> suggest = new ArrayList<String>();
-                for (String search:suggestList){
-                    if (search.toLowerCase().contains(materialSearchBar.getText().toLowerCase()))
-                        suggest.add(search);
-                }
-                materialSearchBar.setLastSuggestions(suggest);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        materialSearchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener( ) {
+        materialSearchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
             public void onSearchStateChanged(boolean enabled) {
-                if (!enabled)
-                    recyclerView.setAdapter(adapter);
+                if (!enabled) {
+                    loadListBook();
+                }
             }
 
             @Override
             public void onSearchConfirmed(CharSequence text) {
-                startSearch(text);
+                startSearch(String.valueOf(text));
             }
 
             @Override
@@ -119,24 +87,39 @@ public class BookList extends AppCompatActivity {
 
             }
         });
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Book");
+        loadListBook();
     }
 
-    private void startSearch(CharSequence text) {
-        FirebaseRecyclerOptions<Book> options =
-                new FirebaseRecyclerOptions.Builder<Book>( )
-                        .setQuery(query, Book.class)
-                        .build( );
-        final Query menuId = bookList.orderByChild("MenuId").equalTo(text.toString());
+    private void startSearch(String text) {
+        for (int i = 0; i < recyclerView.getChildCount(); i++) {
+            BookViewHolder viewHolder = (BookViewHolder) recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
+            String name = (viewHolder).book_name.getText().toString();
+            if (name.toLowerCase().matches("(.*)" + text.toLowerCase() + "(.*)")) {
+                viewHolder.Layout_show();
+            } else {
+                viewHolder.Layout_hide();
+            }
+        }
+    }
 
-        searchAdapter = new FirebaseRecyclerAdapter<Book, BookViewHolder>(options)
-         {
+    private void loadListBook() {
+        Query firebaseSearchQuery = databaseReference.orderByChild("CategoryId").equalTo(categoryId);
+
+        FirebaseRecyclerOptions<Book> options =
+                new FirebaseRecyclerOptions.Builder<Book>()
+                        .setQuery(firebaseSearchQuery, Book.class)
+                        .setLifecycleOwner(this)
+                        .build();
+
+        FirebaseRecyclerAdapter<Book, BookViewHolder> adapter = new FirebaseRecyclerAdapter<Book, BookViewHolder>(options) {
+
             @Override
             protected void onBindViewHolder(@NonNull BookViewHolder bookViewHolder, int i, @NonNull Book book) {
                 bookViewHolder.book_name.setText(book.getName());
                 Picasso.get().load(book.getImage()).into(bookViewHolder.book_image);
-
-                final Book local = book;
-                bookViewHolder.setItemClickListener((view, position, isLongClick) -> Toast.makeText(BookList.this,""+local.getName(), Toast.LENGTH_SHORT).show());
+                bookViewHolder.book_isbn = book.getIsbn();
             }
 
             @NonNull
@@ -144,65 +127,14 @@ public class BookList extends AppCompatActivity {
             public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.book_item, parent, false);
-
                 return new BookViewHolder(view);
-            }
-        };
-        recyclerView.setAdapter(searchAdapter);
-    }
-
-    private void loadSuggest() {
-        bookList.orderByChild("MenuId").equalTo(categoryId)
-                .addValueEventListener(new ValueEventListener( ) {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot postSnapshot:dataSnapshot.getChildren()){
-                            Book item = postSnapshot.getValue(Book.class);
-                            suggestList.add(item.getName());
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-    }
-
-    private void loadListBook(String categoryId) {
-
-        FirebaseRecyclerOptions<Book> options =
-                new FirebaseRecyclerOptions.Builder<Book>( )
-                        .setQuery(query, Book.class)
-                        .build( );
-        final Query menuId = bookList.orderByChild("MenuId").equalTo(categoryId);
-
-        adapter = new FirebaseRecyclerAdapter<Book, BookViewHolder>(options) {
-            @NonNull
-            @Override
-            public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-
-                return null;
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull BookViewHolder bookViewHolder, int i, @NonNull Book book) {
-
-                bookViewHolder.book_name.setText(book.getName());
-                Picasso.get().load(book.getImage()).into(bookViewHolder.book_image);
-
-                final Book local = book;
-                bookViewHolder.setItemClickListener((view, position, isLongClick) -> Toast.makeText(BookList.this,""+local.getName(), Toast.LENGTH_SHORT).show());
             }
         };
 
         //set adapter
-        Log.d("TAG",""+adapter.getItemCount() );
+        Log.d("TAG", "" + adapter.getItemCount());
         recyclerView.setAdapter(adapter);
-
-
-
+        adapter.startListening();
     }
 
 }

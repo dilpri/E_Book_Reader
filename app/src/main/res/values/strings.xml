@@ -72,5 +72,15 @@
 Benvolio describes to Montague how the brawl started. Lady Montague asks whether Benvolio has seen her son, Romeo. Benvolio replies that he earlier saw Romeo pacing through a grove of sycamores outside the city; since Romeo seemed troubled, Benvolio did not speak to him. Concerned about their son, the Montagues tell Benvolio that Romeo has often been seen melancholy, walking alone among the sycamores. They add that they have tried to discover what troubles him, but have had no success. Benvolio sees Romeo approaching, and promises to find out the reason for his melancholy. The Montagues quickly depart.Benvolio approaches his cousin. With a touch of sadness, Romeo tells Benvolio that he is in love with Rosaline, but that she does not return his feelings and has in fact sworn to live a life of chastity. Benvolio counsels Romeo to forget her by gazing on other beauties, but Romeo contends that the woman he loves is the most beautiful of all. Romeo departs, assuring Benvolio that he cannot teach him to forget his love. Benvolio resolves to do just that.  </string>
     <string name="b2"> MORE </string>
     <string name="t18"> Comments  </string>
+    <string name="upload">Upload</string>
+    <string name="button">Button</string>
+    <string name="upload_new_book">Upload New Book</string>
+    <string name="description">Description</string>
+    <string name="author">Author</string>
+    <string name="isbn">ISBN</string>
+    <string name="book_name">Book Name</string>
+    <string name="upload_now">Upload Now</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
 
 </resources>

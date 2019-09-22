@@ -1,5 +1,6 @@
 package com.example.ebookreader.ViewHolder;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -7,32 +8,38 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ebookreader.Interface.ItemClickListener;
+import com.example.ebookreader.BookList;
 import com.example.ebookreader.R;
 
-public class MenuViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+import java.io.Serializable;
+
+public class MenuViewHolder extends RecyclerView.ViewHolder implements Serializable {
 
     public TextView txtMenuName;
     public ImageView imageView;
 
-    private ItemClickListener itemClickListener;
-
     public MenuViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        txtMenuName = (TextView)itemView.findViewById(R.id.menu_name);
-        imageView = (ImageView)itemView.findViewById(R.id.menu_image);
+        txtMenuName = itemView.findViewById(R.id.menu_name);
+        imageView = itemView.findViewById(R.id.menu_image);
 
-        itemView.setOnClickListener(this);
-    }
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View itemView) {
 
-    public void setItemClickListener(ItemClickListener itemClickListener) {
-        this.itemClickListener = itemClickListener;
-    }
+                Intent intent = new Intent(itemView.getContext(), BookList.class);
 
-    @Override
-    public void onClick(View view) {
+                // get position
+                int pos = getAdapterPosition();
 
-        itemClickListener.onClick(view,getAdapterPosition(),false);
+                // check if item still exists
+                if (pos != RecyclerView.NO_POSITION) {
+                    intent.putExtra("CategoryID", String.valueOf(pos + 1));
+                    itemView.getContext().startActivity(intent);
+                }
+
+            }
+        });
     }
 }
