@@ -1,8 +1,5 @@
 package com.example.ebookreader;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnSignIn;
     TextView slogan;
-    static final int GOOGLE_SIGN = 123;
+    static final int RC_SIGN_IN = 123;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
     GoogleSignInClient mGoogleSignInClient;
@@ -45,57 +44,61 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_circular);
         slogan = (TextView)findViewById(R.id.slogan);
         image = (ImageView)findViewById(R.id.bookicon);
+        // Configure Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        FirebaseUser mAuth = FirebaseAuth.getInstance().getCurrentUser();
-        if (mAuth != null) {
+        mAuth = FirebaseAuth.getInstance();
+        if (mAuth != null && mAuth.getCurrentUser() != null) {
             // User is signed in
-            Intent i = new Intent(MainActivity.this, Home.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(i);
+            updateUI(mAuth.getCurrentUser());
         }
 
 
-        /*btnSignIn.setOnClickListener(new View.OnClickListener() {
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SignInGoogle();
 
-                Intent signIn = new Intent(MainActivity.this,SignIn.class);
-                startActivity(signIn);
             }
         });
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent signUp = new Intent(MainActivity.this,SignUp.class);
-                startActivity(signUp);
-            }
-        });*/
     }
 
     void SignInGoogle(){
         progressBar.setVisibility(View.VISIBLE);
-        Intent signIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signIntent,GOOGLE_SIGN);
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == GOOGLE_SIGN) {
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
 
-            try {
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                if (account != null) firebaseAuthWithGoogle(account);
-                //make firebase request
-            }catch (ApiException e){
-                //e.printStackTrace();
-            }
-
+            // Signed in successfully, show authenticated UI.
+            if (account != null)
+                firebaseAuthWithGoogle(account);
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w("TAG", "signInResult:failed code=" + e.getStatusCode());
         }
     }
 
@@ -122,20 +125,10 @@ public class MainActivity extends AppCompatActivity {
 
    private void updateUI(FirebaseUser user) {
        if (user != null){
-
-           String name = user.getDisplayName();
-           String email = user.getEmail();
-           String photo = String.valueOf(user.getPhotoUrl());
-
-           slogan.append("Info : \n");
-           slogan.append(name + "\n");
-           slogan.append(email);
-
-           Picasso.get().load(photo).into(image);
-           //Intent intent = new Intent(getApplicationContext(), Home.class);
-           //startActivity(intent);
-           //btnSignIn.setVisibility(View.INVISIBLE);
-           //btnLogout.setVisibility(View.VISIBLE);
+           Intent intent = new Intent(getApplicationContext(), Home.class);
+           intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+           startActivity(intent);
 
        } else {
 
