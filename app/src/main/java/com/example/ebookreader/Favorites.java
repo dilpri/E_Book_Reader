@@ -5,7 +5,10 @@
 
 package com.example.ebookreader;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -14,7 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ebookreader.Model.Book;
-import com.example.ebookreader.Model.Comment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +32,7 @@ public class Favorites extends AppCompatActivity {
     private ArrayAdapter<String> arrayAdapter;
     private ListView favorites;
     private ArrayList<String> favoritesList = new ArrayList<>();
-    private ArrayList<Comment> favoritesListObj = new ArrayList<>();
+    private ArrayList<Book> favoritesListBookObj = new ArrayList<>();
     private FirebaseDatabase database;
     private DatabaseReference ref;
     private FirebaseUser user;
@@ -54,7 +56,7 @@ public class Favorites extends AppCompatActivity {
                 favorites.setAdapter(arrayAdapter);
                 try {
                     favoritesList.clear();
-                    favoritesListObj.clear();
+                    favoritesListBookObj.clear();
                     for (DataSnapshot isbn : dataSnapshot.getChildren()) {
                         if (isbn != null) {
                             Query query = ref.child("Book").orderByChild("Isbn").equalTo(isbn.getValue(Integer.class));
@@ -64,6 +66,7 @@ public class Favorites extends AppCompatActivity {
                                     for (DataSnapshot bookSnapshot : dataSnapshot.getChildren()) {
                                         Book book = bookSnapshot.getValue(Book.class);
                                         favoritesList.add(book.toString());
+                                        favoritesListBookObj.add(book);
                                         arrayAdapter.notifyDataSetChanged();
                                     }
                                 }
@@ -82,6 +85,16 @@ public class Favorites extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        favorites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Book book = favoritesListBookObj.get(i);
+                Intent intent = new Intent(favorites.getContext(), Introduction.class);
+                intent.putExtra("bookIsbn", String.valueOf(book.getIsbn()));
+                startActivity(intent);
 
             }
         });
