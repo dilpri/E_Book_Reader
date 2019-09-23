@@ -141,19 +141,8 @@ public class Upload extends AppCompatActivity {
             empty = true;
             bookISBN.setError("Please fill this field");
             bookISBN.requestFocus();
-        }
-        if (TextUtils.isEmpty(bookAuthor.getText().toString())) {
-            empty = true;
-            bookAuthor.setError("Please fill this field");
-            bookAuthor.requestFocus();
-        }
-        if (TextUtils.isEmpty(bookDescription.getText().toString())) {
-            empty = true;
-            bookDescription.setError("Please fill this field");
-            bookDescription.requestFocus();
-        }
-        // isbn validation
-        if (books.contains(Integer.parseInt(bookISBN.getText().toString()))) {
+            // isbn validation
+        } else if (books.contains(Integer.parseInt(bookISBN.getText().toString()))) {
             empty = true;
             AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
             builder1.setTitle("Oops!");
@@ -168,6 +157,16 @@ public class Upload extends AppCompatActivity {
             });
 
             alert.show();
+        }
+        if (TextUtils.isEmpty(bookAuthor.getText().toString())) {
+            empty = true;
+            bookAuthor.setError("Please fill this field");
+            bookAuthor.requestFocus();
+        }
+        if (TextUtils.isEmpty(bookDescription.getText().toString())) {
+            empty = true;
+            bookDescription.setError("Please fill this field");
+            bookDescription.requestFocus();
         }
 
         if (!empty)
